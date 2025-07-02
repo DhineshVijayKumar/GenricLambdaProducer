@@ -20,14 +20,15 @@ Resources:
   processOrderProducer:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: processdata/
+      CodeUri: processdata/dist/
       Handler: app.lambdaHandler
       Runtime: nodejs22.x
       Architectures:
         - x86_64
       Environment:
         Variables:
-          WebhookUrl: https://webhook.site/12d6f2e3-af59-4e8e-b1ae-515d9bf0ba45
+          WebhookUrl: https://webhook.site/2e2787c3-e074-4604-8eea-37ae92dca53b
+          LOG_LEVEL: debug
       Events:
         ProcessData:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -39,14 +40,14 @@ Resources:
           Properties:
             Path: /process/order-producer/v1/healthCheck/
             Method: get
-    Metadata: # Manage esbuild properties
-      BuildMethod: esbuild
-      BuildProperties:
-        Minify: true
-        Target: es2020
-        Sourcemap: true
-        EntryPoints:
-          - app.ts
+    # Metadata: # Manage esbuild properties
+    #   BuildMethod: esbuild
+    #   BuildProperties:
+    #     Minify: true
+    #     Target: es2020
+    #     Sourcemap: true
+    #     EntryPoints:
+    #       - app.ts
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
